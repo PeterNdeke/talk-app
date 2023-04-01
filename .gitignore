@@ -1,0 +1,22 @@
+.idea/
+node_modules/
+dist/
+
+.env
+.data/
+coverage/
+
+# Logs
+logs
+*.log
+
+# dotenv environment variables file
+.env
+.env.test
+
+# parcel-bundler cache (https://parceljs.org/)
+.cache
+
+# Next.js build output
+.next
+
