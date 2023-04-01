@@ -44,17 +44,21 @@ export class BaseRepository {
     return this.Model.find(condition).countDocuments();
   }
   upsert(query = {}, newData = {}) {
-    return this.Model.update(query, newData, {
-      upsert: true,
-      setDefaultsOnInsert: true,
-    });
+    return this.Model.updateOne(query, newData);
   }
 
   update(query = {}, newData = {}) {
     return this.Model.updateMany(query, newData);
   }
 
+  delete(condition = {}) {
+    return this.Model.deleteOne(condition);
+  }
+
   getModel() {
     return this.Model;
+  }
+  aggregate(data = []) {
+    return this.Model.aggregate(data);
   }
 }
