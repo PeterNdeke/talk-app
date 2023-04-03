@@ -13,7 +13,15 @@ export default {
         },
       }));
       if (!validation.success) return res.status(400).json({ ...validation });
+
       const { user_id, talk_id } = req.body;
+      const attendeeExist = await AttendeeRepository.findOne({
+        user_id,
+        talk_id,
+      });
+      if (attendeeExist?.id) {
+        throw `Attendee with ${attendeeExist.user_id} already exist in the talk`;
+      }
       const attendee = await AttendeeRepository.create(req.body);
       const talk = await TalkRepository.findById(talk_id);
 

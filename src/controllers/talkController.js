@@ -2,6 +2,7 @@ import makeValidation from "@withvoid/make-validation";
 import ChatMessage from "../models/ChatMessage.js";
 import chatMessageRepository from "../repositories/chatMessageRepository.js";
 import TalkRepository from "../repositories/talkRepository.js";
+import userRepository from "../repositories/userRepository.js";
 import loggingService from "../utils/loggingService.js";
 export default {
   createTalk: async (req, res) => {
@@ -74,7 +75,7 @@ export default {
       };
       const currentLoggedUser = req.userId;
       console.log(talkId, messagePayload, currentLoggedUser);
-      const post = await ChatMessage.createPostInChatRoom(
+      const post = await chatMessageRepository.createChatMessage(
         talkId,
         messagePayload,
         currentLoggedUser
@@ -83,6 +84,34 @@ export default {
       return res.status(200).json({ success: true, post });
     } catch (error) {
       return res.status(500).json({ success: false, error: error });
+    }
+  },
+  getChatsByTalkId: async (req, res) => {
+    try {
+      const { talkId } = req.params;
+      const talk = await TalkRepository.findById(talkId);
+      if (!talk) {
+        return res.status(400).json({
+          success: false,
+          message: "No talk exists for this id",
+        });
+      }
+      const users = await userRepository.getUserByIds(talk.userIds);
+      const options = {
+        page: parseInt(req.query.page) || 0,
+        limit: parseInt(req.query.limit) || 10,
+      };
+      const chats = await chatMessageRepository.getChatsByTalkId(
+        talkId,
+        options
+      );
+      return res.status(200).json({
+        success: true,
+        chats,
+        users,
+      });
+    } catch (error) {
+      return res.status(500).json({ success: false, error });
     }
   },
 };
