@@ -31,6 +31,11 @@ app.use("/api/v1/users", userRouter);
 app.use("/api/v1/talk", decode, talkRouter);
 app.use("/api/v1/attendee", decode, attendeeRouter);
 
+/** render an index page */
+app.use("/", (req, res) => {
+  res.send("WELCOME TALK APP API");
+});
+
 /** catch 404 and forward to error handler */
 app.use("*", (req, res) => {
   return res.status(404).json({
