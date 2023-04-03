@@ -1,5 +1,5 @@
 import makeValidation from "@withvoid/make-validation";
-import AttendeeRepository from "../repositories/AttendeeRepository.js";
+import AttendeeRepository from "../repositories/attendeeRepository.js";
 import TalkRepository from "../repositories/talkRepository.js";
 import loggingService from "../utils/loggingService.js";
 export default {
