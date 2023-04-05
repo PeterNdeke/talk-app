@@ -1,5 +1,4 @@
 import makeValidation from "@withvoid/make-validation";
-import ChatMessage from "../models/ChatMessage.js";
 import chatMessageRepository from "../repositories/chatMessageRepository.js";
 import TalkRepository from "../repositories/talkRepository.js";
 import userRepository from "../repositories/userRepository.js";

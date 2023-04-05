@@ -65,7 +65,6 @@ export default {
       const { talk_id } = req.params;
 
       const talks = await AttendeeRepository.find({ talk_id });
-      console.log(talks);
       return res.status(200).json({ success: true, talks });
     } catch (error) {
       return res.status(500).json({ success: false, error: error });
