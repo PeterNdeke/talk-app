@@ -57,11 +57,11 @@ class ChatMessageRepository extends BaseRepository {
           $group: {
             _id: "$talkInfo._id",
             postId: { $last: "$_id" },
-            chatRoomId: { $last: "$talkInfo._id" },
+            talkId: { $last: "$talkInfo._id" },
             message: { $last: "$message" },
             postedByUser: { $last: "$postedByUser" },
             readByRecipients: { $last: "$readByRecipients" },
-            chatRoomInfo: { $addToSet: "$talkInfo.userProfile" },
+            talkInfo: { $addToSet: "$talkInfo.userProfile" },
             createdAt: { $last: "$createdAt" },
             updatedAt: { $last: "$updatedAt" },
           },

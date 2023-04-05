@@ -50,7 +50,12 @@ export default {
     try {
       const { talkId } = req.params;
       const talk = await TalkRepository.findById(talkId);
-
+      if (!talk) {
+        return res.status(400).json({
+          success: false,
+          message: "No talk exists for this id",
+        });
+      }
       const allUserIds = talk.userIds;
 
       const data = await TalkRepository.initiateChat(allUserIds);

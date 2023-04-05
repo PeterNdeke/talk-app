@@ -61,4 +61,7 @@ export class BaseRepository {
   aggregate(data = []) {
     return this.Model.aggregate(data);
   }
+  find(conditions = {}) {
+    return this.Model.find(conditions).exec();
+  }
 }

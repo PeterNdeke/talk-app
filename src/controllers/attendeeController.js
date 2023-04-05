@@ -15,6 +15,10 @@ export default {
       if (!validation.success) return res.status(400).json({ ...validation });
 
       const { user_id, talk_id } = req.body;
+      const talk = await TalkRepository.findById(talk_id);
+      if (!talk) {
+        throw "Talk did not exist";
+      }
       const attendeeExist = await AttendeeRepository.findOne({
         user_id,
         talk_id,
@@ -23,7 +27,6 @@ export default {
         throw `Attendee with ${attendeeExist.user_id} already exist in the talk`;
       }
       const attendee = await AttendeeRepository.create(req.body);
-      const talk = await TalkRepository.findById(talk_id);
 
       await TalkRepository.upsert(
         { _id: talk.id },
@@ -61,8 +64,8 @@ export default {
     try {
       const { talk_id } = req.params;
 
-      const talks = await AttendeeRepository.all({ talk_id });
-
+      const talks = await AttendeeRepository.find({ talk_id });
+      console.log(talks);
       return res.status(200).json({ success: true, talks });
     } catch (error) {
       return res.status(500).json({ success: false, error: error });
